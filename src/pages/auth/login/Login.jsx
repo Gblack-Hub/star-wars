@@ -1,61 +1,53 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, loginSelector } from '../../../store/slices/auth/login';
 import styles from "./login.module.css";
 
 export default function Login() {
     const navigate = useNavigate();
     let location = useLocation();
+    const dispatch = useDispatch();
+
     let from = location.state?.from?.pathname || "/";
+
+    const { success, failure, error } = useSelector(loginSelector).login;
 
     const [values, setValues] = useState({
 		characterName: "Luke Skywalker",
 		birthYear: "19BBY",
 	});
-    const [error, setError] = useState({
-        status: "",
-        message: ""
-    });
-    const [warning, setWarning] = useState({
-        status: "",
-        message: ""
-    })
+
+    const [isValidated, setIsValidated] = useState({
+		status: true,
+		message: "",
+	});
 
     function handleChange(event){
 		setValues({ ...values, [event.target.name]: event.target.value });
 	};
-
-    async function fetchData(values) {
-        try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}people/?search=${values.characterName}`)
-            const data = await response.json();
-            let result = data.results;
-            validateLoginDetails(result);
-        } catch (error) {
-            setError(error);
-        }
-    }
-
-    function validateLoginDetails(result) {
-        let invalidConditions = result.length < 1 || (result[0].name !== values.characterName && result[0].birth_year !== values.birthYear);
-        
-        if(invalidConditions){
-            return setError({...error, status: true, message: 'Invalid details entered.'})
-        }
-        navigate(from, { replace: true });
-    }
     
 	async function handleSubmit(e) {
         e.preventDefault();
-        
+
 		if (!values.characterName.trim()) {
-            return setWarning({...warning, status: true, message: "Enter Character name"});
+            return setIsValidated({...isValidated, status: false, message: "Enter Character name"});
         }
         if (!values.birthYear.trim()){
-            return setWarning({...warning, status: true, message: "Enter birth year"});
+            return setIsValidated({...isValidated, status: false, message: "Enter birth year"})
         }
-        fetchData(values);
-        console.log(values);
+
+        await dispatch(login(values));
 	}
+
+    function redirectUser() {
+        if(success)
+            navigate(from, { replace: true });
+    }
+    
+    useEffect(function(){
+        redirectUser();
+    })
 
     return (
         <div className={styles.container}>
@@ -70,7 +62,7 @@ export default function Login() {
                                 type="text"
                                 name="characterName"
                                 className={styles.login_input}
-                                values={values.characterName}
+                                value={values.characterName}
                                 onChange={handleChange}
                                 placeholder="Character Name"
                                 required
@@ -81,14 +73,14 @@ export default function Login() {
                                 type="text"
                                 name="birthYear"
                                 className={styles.login_input}
-                                values={values.birthYear}
+                                value={values.birthYear}
                                 onChange={handleChange}
                                 placeholder="Birth Year"
                                 required
                             />
                         </div>
-                        {error.status && <div className={styles.login_error}>{error.message}</div>}
-                        {warning.status && <div className={styles.login_error}>{warning.message}</div>}
+                        {failure && <div className={styles.login_error}>{error.message ?? "Login error. Please check your internet connection."}</div>}
+                        {!isValidated.status && <div className={styles.login_warning}>{isValidated.message}</div>}
                         <div>
                             <button type="submit" className={styles.button}>Submit</button>
                         </div>

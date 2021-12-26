@@ -87,11 +87,15 @@
   font-size: small;
   border-radius: 5px;
 }
+.login_warning {
+  background-color: rgba(250, 234, 7, 0.2);
+  padding: 0.35rem;
+  text-align: center;
+  font-size: small;
+  border-radius: 5px;
+}
 
 @media only screen and (min-width: 576px) {
-  .rows {
-    /* flex-direction: row; */
-  }
   .column_one {
     display: block;
   }
