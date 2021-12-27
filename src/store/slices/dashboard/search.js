@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     searchResults: [],
+    searchType: "",
     loading: false,
     success: false,
     failure: false,
@@ -16,7 +17,8 @@ export const searchSlice = createSlice({
             state.loading = true;
         },
         searchSuccess: (state, { payload }) => {
-            state.searchResults = payload;
+            state.searchResults = payload.results;
+            state.searchType = payload.searchType;
             state.success = true;
             state.loading = false;
             state.failure = false;
@@ -54,7 +56,12 @@ export const initiateSearch = (searchData) => {
 
             const {results} = await response.json();
 
-            dispatch(searchSuccess(results));
+            let data = {
+                results,
+                searchType: searchData.searchType
+            }
+
+            dispatch(searchSuccess(data));
 
         } catch (error) {
             dispatch(searchFailure(error.message));
