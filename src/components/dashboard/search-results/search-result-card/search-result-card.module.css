@@ -1,0 +1,27 @@
+.card {
+  padding: 1.2rem;
+  border-radius: 7px;
+  background-color: var(--dark-theme-secondary);
+  border: 1px solid var(--dark-theme-secondary);
+  margin-bottom: 15px;
+}
+
+.card_lead_text {
+  font-size: 1.8rem;
+  margin-bottom: 0.6rem;
+}
+
+.card_list {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+.card_list_title {
+  font-weight: bold;
+}
+
+.card:hover {
+  border: 1px solid var(--primary-color);
+  transition: 0.5s;
+}

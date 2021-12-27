@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import loginReducer from './slices/auth/login';
-import usersReducer from "./slices/dashboard/users"
+import searchReducer from './slices/dashboard/search';
 
 export const store = configureStore({
   reducer: {
     login: loginReducer,
-    users: usersReducer,
+    search: searchReducer,
   }
 })

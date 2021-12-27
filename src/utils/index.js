@@ -1,0 +1,1 @@
+export const searchType = ['people', 'planets', 'species'];
