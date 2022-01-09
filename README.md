@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Getting Started with SWAPI Project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -45,11 +45,28 @@ Once a user logs in, their login status is saved to the local storage to prevent
 
 You can make use of any of the listed credentials below to login to the application:
 
-1.  Name: Luke Skywalker
+1.  Name: Luke Skywalker  
     Birth Year: 19BBY
-
-2.  Name: Luke Skywalker  
+2.  Name: C-3PO  
+    Birth Year: 112BBY
+3.  Name: R2-D2
+    Birth Year: 33BBY
+4.  Name: Darth Vader
+    Birth Year: 41.9BBY
+5.  Name: Leia Organa
     Birth Year: 19BBY
+6.  Name: Owen Lars
+    Birth Year: 52BBY
+7.  Name: Beru Whitesun lars
+    Birth Year: 47BBY
+8.  Name: R5-D4
+    Birth Year: unknown
+9.  Name: Biggs Darklighter
+    Birth Year: 24BBY
+10. Name: Obi-Wan Kenobi
+    Birth Year: 57BBY
+11. Name: Obi-Wan Kenobi
+    Birth Year: 57BBY
 
 ### Dashboard / Search Page
 
