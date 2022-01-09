@@ -4,7 +4,7 @@
   align-items: flex-end;
 }
 
-.dark_backgound {
+.dark_background {
   padding: 2rem;
   background-color: var(--dark-theme-secondary);
 }

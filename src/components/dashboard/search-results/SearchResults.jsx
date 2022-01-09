@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import { searchSelector } from '../../../store/slices/dashboard/search';
 
 function SearchResults() {
-    // const dispatch = useDispatch();
     const { searchResults, searchType, loading, success, failure, error } = useSelector(searchSelector).search;
 
     if(failure) return <div className={styles.error_text}>ERROR: {error}</div>;

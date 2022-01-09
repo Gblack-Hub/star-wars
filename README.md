@@ -29,42 +29,46 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## PROJECT IMPLEMENTATION DETAILS
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This is a simple searching application that makes use of the SWAPI resource (​https://swapi.co/​) to display information about all Star Wars related content.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The application has two pages:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+1. Login Page
+2. Dashboard / Search Page
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Login Page
 
-## Learn More
+The Login page requires the `name` and `birth year` of any Star Wars character as it's login credentials.
+Once a user logs in, their login status is saved to the local storage to prevent subsequent login on every visit to the application. The user can however choose to logout on the search page.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can make use of any of the listed credentials below to login to the application:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1.  Name: Luke Skywalker
+    Birth Year: 19BBY
 
-### Code Splitting
+2.  Name: Luke Skywalker  
+    Birth Year: 19BBY
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Dashboard / Search Page
 
-### Analyzing the Bundle Size
+This page contains a search box where users can search for any star wars character name or any planets. All search results will be displayed below the search box and if available, more data will be fetched as a user scrolls to the bottom of the page.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+There is a "logout" button at the top right corner of the page. This function removes a user's logged in status from the local storage and directs them back to the login page.
 
-### Making a Progressive Web App
+## Tools and Good Practices implemented
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+1.  React-Router 6 was used for page routing purposes.
 
-### Advanced Configuration
+2.  Redux was used for state management. I prefer the use of React-Redux over context API because of its performance and scaling advantages.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+3.  I used the Intersection Observer to handle infinite scrolling feature, instead of making use of a third party library.
 
-### Deployment
+4.  I made use of CSS module because it helps to avoid namespace collision, random CSS class generations, etc.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+5.  I created a custom autocomplete component rather than using a third party library.
 
-### `yarn build` fails to minify
+6.  I avoid using anonymous function throughout the application and opted for named functions instead, this helps in memory management because it prevents the allocation of new memory each time a component is re-rendered.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+7.  The Application is responsive and fits the mobile, tablet, desktop and larger devices perfectly.
