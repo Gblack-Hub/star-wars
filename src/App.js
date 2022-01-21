@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/login/Login";
-import SearchPage from "./pages/dashboard/SearchPage";
+import SearchPage from "./pages/search-page/SearchPage";
 import RequireAuth from "./service/authentication/RequireAuth";
 import SearchResultsPage from "./pages/search-results/SearchResultsPage";
 

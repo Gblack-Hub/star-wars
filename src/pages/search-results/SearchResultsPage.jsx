@@ -7,7 +7,7 @@ export default function SearchResultsPage(){
 
     return (
         <main className={styles.page}>
-            <h1 className={styles.title}>Search Results ({state.searchTerm})</h1>
+            <h1 className={styles.title}>Search Results ({state?.searchTerm})</h1>
             <SearchResults searchValues={state} />
         </main>
     )
