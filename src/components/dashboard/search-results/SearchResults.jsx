@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import SearchResultCard from './search-result-card/SearchResultCard';
+// import SearchResultCard from './search-result-card/SearchResultCard';
 import { SearchResultGraph } from './search-result-graph/SearchResultGraph';
 import styles from "./search-results.module.css";
 
@@ -69,7 +69,7 @@ export default function SearchResults({searchValues}) {
     return (
         <div>
             {loading && renderLoadingResponse()}
-            {error && renderErrorResponse(error)}
+            {error && allResults.length === 0 && renderErrorResponse(error)}
             {allResults.length === 0 && renderNoResultsFound()}
 
                 <div className={styles.encoding}>

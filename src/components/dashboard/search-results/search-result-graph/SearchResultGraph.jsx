@@ -1,4 +1,5 @@
-import React from 'react';
+import {useState} from 'react';
+import styles from "./search-result-graph.module.css";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,33 +25,32 @@ export const options = {
   plugins: {
     legend: {
       position: 'top',
+      display: false
     },
     title: {
-      display: true,
-      text: 'Chart.js Bar Chart',
-    },
+      display: false,
+      text: 'Bar Chart',
+    }
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Dataset 1',
-      data: [200, 300, 400, 500, 600, 700, 800],
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Dataset 2',
-      data: [700, 200, 500, 800, 400, 600, 300],
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
 export function SearchResultGraph({result, searchType}) {
-    console.log(result, searchType)
-  return <Bar options={options} data={data} />;
+    let labels = searchType === "planets" ? ["Population"] : ['Height', 'Mass'];
+    const [data] = useState({
+        labels,
+        datasets: [
+          {
+            label: searchType === "planets" ? "Population" : 'Height & Mass',
+            data: searchType === "planets" ? [Number(result.population)] : [Number(result.height), Number(result.mass)],
+            color: "#FFFFFF",
+            backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(53, 162, 235, 0.5)'],
+          }
+        ],
+    })
+    return (
+        <div className={styles.card}>
+            <div className={styles.card_lead_text}>{result.name}</div>
+            <Bar options={options} data={data} />
+        </div>
+    )
 }
