@@ -3,7 +3,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 YARN or NPM is required to serve this project in development.
 
-## STEPS
+## SET UP INSTRUCTIONS
 
 1. Clone or download this repository.
 2. Inside the root folder of the downloaded/cloned project, run `yarn`. This will install all the needed dependencies for the project to run in development.
