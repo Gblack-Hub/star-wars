@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/auth/login/Login";
-import Dashboard from "./pages/dashboard/Dashboard";
+import SearchPage from "./pages/dashboard/SearchPage";
 import RequireAuth from "./service/authentication/RequireAuth";
-// import PrivateRoutes from './PrivateRoutes';
+import SearchResultsPage from "./pages/search-results/SearchResultsPage";
 
 function App() {
   return (
@@ -13,7 +13,15 @@ function App() {
           path="/"
           element={
             <RequireAuth>
-              <Dashboard />
+              <SearchPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/search-results"
+          element={
+            <RequireAuth>
+              <SearchResultsPage />
             </RequireAuth>
           }
         />

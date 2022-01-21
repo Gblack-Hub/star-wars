@@ -1,8 +1,7 @@
 import styles from "./search-box.module.css";
 import { searchType } from '../../../utils';
-import { useDispatch } from 'react-redux';
-import { initiateSearch } from "../../../store/slices/dashboard/search";
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 function renderSearchType() {
     return searchType.map(function (item, index) {
@@ -11,34 +10,12 @@ function renderSearchType() {
 }
 
 function SearchBox() {
-    const dispatch = useDispatch();
-    const loader = useRef(null);
-    
-    const [page, setPage] = useState(1)
+    const navigate = useNavigate();
+
     const [values, setValues] = useState({
         searchTerm: "",
         searchType: "people"
     })
-
-    const handleObserver = (entities) => {
-        const target = entities[0]
-        if (target.isIntersecting) {
-          setPage(_page => _page + 1)
-        }
-    }
-
-    useEffect(() => {
-        const options = {
-          root: null,
-          rootMargin: '20px',
-          threshold: 1.0,
-        }
-        // initialize IntersectionObserver and attaching to Load More div
-        const observer = new IntersectionObserver(handleObserver, options)
-        if (loader.current) {
-          observer.observe(loader.current)
-        }
-      }, [])
     
     function handleChange(event){
 		setValues({ ...values, [event.target.name]: event.target.value });
@@ -50,8 +27,7 @@ function SearchBox() {
         if(values.searchTerm === "" || values.searchType === ""){
             return;
         }
-
-        dispatch(initiateSearch(values, page));
+        navigate("/search-results", {state: values})
     }
 
     return (

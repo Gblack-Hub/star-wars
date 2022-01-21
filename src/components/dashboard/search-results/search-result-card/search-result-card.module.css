@@ -4,6 +4,7 @@
   background-color: var(--dark-theme-secondary);
   border: 1px solid var(--dark-theme-secondary);
   margin-bottom: 15px;
+  width: 100%;
 }
 
 .card_lead_text {
@@ -24,4 +25,10 @@
 .card:hover {
   border: 1px solid var(--primary-color);
   transition: 0.5s;
+}
+
+@media only screen and (min-width: 576px) {
+  .card {
+    width: 42%;
+  }
 }

@@ -1,14 +1,12 @@
 import React from 'react'
 import Navbar from '../../components/dashboard/navbar/Navbar';
 import SearchBox from '../../components/dashboard/search-box/SearchBox';
-import SearchResults from '../../components/dashboard/search-results/SearchResults';
 
-export default function Dashboard() {
+export default function SearchPage() {
     return (
         <>
             <Navbar />
             <SearchBox />
-            <SearchResults />
         </>
     )
 }

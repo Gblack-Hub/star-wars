@@ -6,6 +6,7 @@
 
 .dark_background {
   padding: 2rem;
+  height: 87vh;
   background-color: var(--dark-theme-secondary);
 }
 .search_text {
@@ -95,8 +96,10 @@
   }
   .searchbox_container {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    width: 60%;
+    margin: auto;
+    /* flex-direction: row; */
+    justify-content: center;
     gap: 0.5rem;
     align-items: flex-end;
   }
