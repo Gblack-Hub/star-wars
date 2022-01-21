@@ -4,7 +4,7 @@ import styles from "./search-results.module.css";
 
 export default function SearchResults({searchValues}) {
     const [page, setPage] = useState(1)
-    const [results, setResults] = useState([]);
+    const [allResults, setAllResults] = useState([]);
     const [nextResults, setNextResults] = useState("");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -42,10 +42,11 @@ export default function SearchResults({searchValues}) {
                     return;
                 }
                 const {results, next} = await response.json();
-                const updatedResults = results?.concat(results)
+                console.log(results)
+                const updatedResults = allResults?.concat(results)
                 setNextResults(next);
                 console.log(updatedResults);
-                setResults(updatedResults);
+                setAllResults(updatedResults);
                 setLoading(false);
             } catch (error) {
                 setLoading(false)
@@ -61,10 +62,10 @@ export default function SearchResults({searchValues}) {
             {loading && renderLoadingResponse()}
             {error && renderErrorResponse(error)}
             <div style={{display: "flex", flexWrap: "wrap", gap: "17px"}}>
-                {renderResults(results, searchValues)}
+                {renderResults(allResults, searchValues)}
             </div>
             <div ref={loader} className='text-center'>
-                { results?.length > 0 && loading && <div>Loading more...</div> }
+                { allResults?.length > 0 && loading && <div>Loading more...</div> }
             </div>
         </div>
     )

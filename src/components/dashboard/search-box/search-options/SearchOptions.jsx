@@ -9,12 +9,15 @@ SearchOptions.propTypes = {
     onClick: PropTypes.func
 };
 
-export default function SearchOptions({showOptions, options, onClick}) {
-    if(showOptions && options.length < 1) return <div className={styles.options__container}>loading...</div>
+export default function SearchOptions({showOptions, searchTerm, options, onClick}) {
+    //add the typed search term to the options list
+    const newOptions = [{name: searchTerm}, ...options];
+
+    if(showOptions && newOptions.length < 1) return <div className={styles.options__container}>loading...</div>
     if(showOptions)
     return (
         <div className={styles.options__container}>
-            {options?.map((item,index) => (
+            {newOptions?.map((item,index) => (
                 <div key={index} className={styles.options__item} onClick={ () => onClick(item) }>
                     <span className={styles.options__text}>
                         { item?.name }

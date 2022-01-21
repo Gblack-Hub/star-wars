@@ -1,6 +1,6 @@
 import styles from "./search-box.module.css";
 import { searchType } from '../../../utils';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import SearchOptions from './search-options/SearchOptions';
 
@@ -15,7 +15,12 @@ function SearchBox() {
     })
 
     function handleChange(event) {
-        setValues({...values, [event.target.name]: event.target.value});
+        const {value, name} = event.target;
+        setValues({...values, [name]: value});
+        
+        //fetch data only if a search term exists and only when target name is searchTerm, else hide dropdown menu
+        if(value.trim() && name === "searchTerm") fetchData(value);
+        else setShowOptions(false)
     }
 
     function handleSubmit(e){
@@ -24,34 +29,35 @@ function SearchBox() {
         if(values.searchTerm === "" || values.searchType === ""){
             return;
         }
-        
+
         navigate("/search-results", {state: values})
     }
 
     async function handleSelectOption(item) {
-        setShowOptions(false);
         setValues({...values, searchTerm: item?.name});
+        setShowOptions(false);
     }
 
-    useEffect(function(){
-        const { searchTerm, searchType } = values;
-
-        async function fetchData(){
-            setShowOptions(true);
-            try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}${searchType}/?search=${searchTerm}`);
-                if(!response.ok) return;
-                const {results} = await response.json();
-                setOptions(results);
-            } catch (error) {
-                console.log(error.message);
-            }
+    async function fetchData(term){
+        setShowOptions(true);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}${values.searchType}/?search=${term}`);
+            if(!response.ok) return;
+            const {results} = await response.json();
+            setOptions(results);
+        } catch (error) {
+            console.log(error.message);
         }
+    }
 
-        //fetch data only if a search term exists, else hide dropdown menu
-        if(searchTerm.trim()) fetchData();
-        else setShowOptions(false)
-    }, [values])
+    // useEffect(function(){
+        //     const { searchTerm, searchType } = values;
+
+
+    //     //fetch data only if a search term exists, else hide dropdown menu
+    //     if(searchTerm.trim()) fetchData();
+    //     else setShowOptions(false)
+    // }, [values])
 
     return (
         <div className={styles.dark_background}>
@@ -64,6 +70,7 @@ function SearchBox() {
                     </div>
                     <SearchOptions
                         showOptions={ showOptions }
+                        searchTerm={values.searchTerm}
                         options={ options }
                         onClick={ handleSelectOption }
                     />

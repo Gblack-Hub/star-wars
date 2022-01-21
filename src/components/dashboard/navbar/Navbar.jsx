@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styles from "./navbar.module.css";
 
 export default function Navbar() {
@@ -11,6 +11,9 @@ export default function Navbar() {
     }
     return (
         <nav className={styles.navbar}>
+            <Link to="/">
+                <span className={styles.navbar__brand}>Home</span>
+            </Link>
         <button className={styles.button} onClick={handleLogout}>Logout</button>
     </nav>
     )
