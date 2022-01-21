@@ -33,10 +33,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 This is a simple searching application that makes use of the SWAPI resource (​https://swapi.co/​) to display information about all Star Wars related content.
 
-The application has two pages:
+The application has three pages:
 
 1. Login Page
-2. Dashboard / Search Page
+2. Search Page
+3. Search Results Page
 
 ### Login Page
 
@@ -68,11 +69,15 @@ You can make use of any of the listed credentials below to login to the applicat
 11. Name: Obi-Wan Kenobi
     Birth Year: 57BBY
 
-### Dashboard / Search Page
+### Search Page
 
-This page contains a search box where users can search for any star wars character name or any planets. All search results will be displayed below the search box and if available, more data will be fetched as a user scrolls to the bottom of the page.
+This page contains a search box where users can search for any star wars character name or any planets.
 
 There is a "logout" button at the top right corner of the page. This function removes a user's logged in status from the local storage and directs them back to the login page.
+
+### Search Results Page
+
+This page contains the results of the search term inputted in the search screen and if available, more data will be fetched as a user scrolls to the bottom of the page.
 
 ## Tools and Good Practices implemented
 
@@ -80,12 +85,14 @@ There is a "logout" button at the top right corner of the page. This function re
 
 2.  Redux was used for state management. I prefer the use of React-Redux over context API because of its performance and scaling advantages.
 
-3.  I used the Intersection Observer to handle infinite scrolling feature, instead of making use of a third party library.
+3.  I used the Intersection Observer to handle infinite scrolling feature, instead of making use of a third party library so to reduce bundle size.
 
 4.  I made use of CSS module because it helps to avoid namespace collision, random CSS class generations, etc.
 
-5.  I created a custom autocomplete component rather than using a third party library.
+5.  I created a custom autocomplete component rather than using a third party library to also reduce bundle size.
 
-6.  I avoid using anonymous function throughout the application and opted for named functions instead, this helps in memory management because it prevents the allocation of new memory each time a component is re-rendered.
+6.  Adequate form validation on the frontend is implemented to avoid unnecessary request to the server.
 
-7.  The Application is responsive and fits the mobile, tablet, desktop and larger devices perfectly.
+7.  I avoided using anonymous function throughout the application and opted for named functions instead, this helps in memory management because it prevents the allocation of new memory each time a component is re-rendered.
+
+8.  The Application is responsive and fits the mobile, tablet, desktop and larger devices perfectly.

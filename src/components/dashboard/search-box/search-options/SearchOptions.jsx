@@ -10,7 +10,7 @@ SearchOptions.propTypes = {
 };
 
 export default function SearchOptions({showOptions, options, onClick}) {
-    if(showOptions && options.length < 1) return <div className={styles.options__container}>...</div>
+    if(showOptions && options.length < 1) return <div className={styles.options__container}>loading...</div>
     if(showOptions)
     return (
         <div className={styles.options__container}>
