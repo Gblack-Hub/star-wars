@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import SearchResultCard from './search-result-card/SearchResultCard';
+import { SearchResultGraph } from './search-result-graph/SearchResultGraph';
 import styles from "./search-results.module.css";
 
 export default function SearchResults({searchValues}) {
@@ -8,6 +9,7 @@ export default function SearchResults({searchValues}) {
     const [nextResults, setNextResults] = useState("");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [encoding, setEncoding] = useState("json");
     const loader = useRef(null);
     
     const handleObserver = (entities) => {
@@ -30,29 +32,36 @@ export default function SearchResults({searchValues}) {
         }
     }, [])
 
-    useEffect(function(){
-        async function fetchResults(){
-            if(nextResults)
-            setLoading(true);
-            try {
-                const response = await fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?search=${searchValues.searchTerm}&page=${page}`);
-                if(!response.ok){
-                    setError('Something went wrong while fetching..');
-                    setLoading(false);
-                    return;
-                }
-                const {results, next} = await response.json();
-                console.log(results)
-                const updatedResults = allResults?.concat(results)
-                setNextResults(next);
-                console.log(updatedResults);
-                setAllResults(updatedResults);
+    function handleChangeEncoding(e) {
+        setEncoding(e.target.value);
+        console.log(encoding);
+        fetchResults();
+    }
+
+    async function fetchResults(){
+        if(nextResults)
+        setLoading(true);
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?search=${searchValues.searchTerm}&page=${page}${encoding === "wookiee" ? "/?format=wookiee" : ""}`);
+            if(!response.ok){
+                setError('Something went wrong while fetching..');
                 setLoading(false);
-            } catch (error) {
-                setLoading(false)
-                setError(error.message);
+                return;
             }
+            const {results, next} = await response.json();
+            console.log(results)
+            const updatedResults = allResults?.concat(results)
+            setNextResults(next);
+            console.log(updatedResults);
+            setAllResults(updatedResults);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false)
+            setError(error.message);
         }
+    }
+
+    useEffect(function(){
         fetchResults();
         // eslint-disable-next-line
     }, [page]);
@@ -61,9 +70,17 @@ export default function SearchResults({searchValues}) {
         <div>
             {loading && renderLoadingResponse()}
             {error && renderErrorResponse(error)}
-            <div style={{display: "flex", flexWrap: "wrap", gap: "17px"}}>
-                {renderResults(allResults, searchValues)}
-            </div>
+            {allResults.length === 0 && renderNoResultsFound()}
+
+                <div className={styles.encoding}>
+                    <label>
+                        <input type="radio" value="json" name="encoding" checked={encoding === "json"} onChange={handleChangeEncoding} /> JSON
+                    </label>
+                    <label>
+                        <input type="radio" value="wookiee" name="encoding" checked={encoding === "wookiee"} onChange={handleChangeEncoding} /> Wookie
+                    </label>
+                </div>
+            {renderResults(allResults, searchValues)}
             <div ref={loader} className='text-center'>
                 { allResults?.length > 0 && loading && <div>Loading more...</div> }
             </div>
@@ -72,9 +89,16 @@ export default function SearchResults({searchValues}) {
 }
 
 function renderResults(results, searchValues){
-    return results?.map((item, index) => (
-        <SearchResultCard result={item} searchType={searchValues.searchType} key={index} />
-    ))
+    return <div className={styles.search_results__container}>
+        {results?.map(function(item, index) {
+            return <SearchResultGraph result={item} searchType={searchValues.searchType} key={index} />
+            // return <SearchResultCard result={item} searchType={searchValues.searchType} key={index} />
+        })}
+    </div>
+}
+
+function renderNoResultsFound(){
+    return <div className={styles.no_results}>No results found</div>
 }
 
 function renderLoadingResponse(){

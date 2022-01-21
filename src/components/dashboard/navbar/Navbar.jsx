@@ -14,7 +14,7 @@ export default function Navbar() {
             <Link to="/">
                 <span className={styles.navbar__brand}>Home</span>
             </Link>
-        <button className={styles.button} onClick={handleLogout}>Logout</button>
+            <button className={styles.button} onClick={handleLogout}>Logout</button>
     </nav>
     )
 }

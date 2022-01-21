@@ -1,8 +1,15 @@
 # Getting Started with SWAPI Project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+YARN or NPM is required to serve this project in development.
 
-## Available Scripts
+## STEPS
+
+1. Clone or download this repository.
+2. Inside the root folder of the downloaded/cloned project, run `yarn`. This will install all the needed dependencies for the project to run in development.
+3. Run `yarn start` to start the project.
+
+## Other Available Scripts
 
 In the project directory, you can run:
 
