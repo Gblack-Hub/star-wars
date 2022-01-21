@@ -1,5 +1,11 @@
+import PropTypes from 'prop-types';
 import { formatNumberInThousand } from "../../../../utils";
 import styles from "./search-result-card.module.css";
+
+SearchResultCard.propTypes = {
+    result: PropTypes.object,
+    searchType: PropTypes.string
+}
 
 function SearchResultCard({result, searchType}) {
     return (
