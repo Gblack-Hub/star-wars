@@ -1,11 +1,8 @@
-import { useState } from "react";
 import styles from "./switch-encoding.module.css";
 
-export default function SwitchEncoding({onChangeEncoding}){
-    const [encoding, setEncoding] = useState("");
+export default function SwitchEncoding({onChangeEncoding, encoding}){
 
     function handleChangeEncoding(e) {
-        setEncoding(e.target.value);
         onChangeEncoding(e.target.value);
     }
     return (

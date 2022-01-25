@@ -49,7 +49,7 @@ export function SearchResultWookieGraph({result, searchType}) {
     })
     return (
         <div className={styles.card}>
-            <div className={styles.card_lead_text}>{result.name}</div>
+            <div className={styles.card_lead_text}>{result.whrascwo}</div>
             <Bar options={options} data={data} />
         </div>
     )

@@ -9,3 +9,10 @@ export const formatNumberInThousand = (num) => {
     return;
   }
 };
+
+export const requestHeaders = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
+};

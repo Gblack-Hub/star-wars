@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-// import SearchResultCard from './search-result-card/SearchResultCard';
 import { SearchResultGraph } from './search-result-graph/SearchResultGraph';
 import { SearchResultWookieGraph } from './search-result-graph/SearchResultWookieGraph';
 import styles from "./search-results.module.css";
+import { requestHeaders } from '../../../utils/index';
+import SwitchEncoding from './switch-encoding/SwitchEncoding';
 
 export default function SearchResults({searchValues}) {
     const [page, setPage] = useState(1)
     const [allResults, setAllResults] = useState([]);
-    const [nextResults, setNextResults] = useState("");
+    // const [nextResults, setNextResults] = useState(true);
+    const [encoding, setEncoding] = useState("wookiee");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const loader = useRef(null);
@@ -15,7 +17,7 @@ export default function SearchResults({searchValues}) {
     const handleObserver = (entities) => {
         const target = entities[0]
         if (target.isIntersecting) {
-            console.log('d')
+            console.log('observed');
           setPage(_page => _page + 1)
         }
     }
@@ -33,26 +35,48 @@ export default function SearchResults({searchValues}) {
     }, [])
 
     async function fetchResults(){
-        let response;
-        if(nextResults)
         setLoading(true);
-        try {
-            if(searchValues.encoding === "wookiee"){
-                response = await fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?format=wookiee`);
-            } else {
-                response = await fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?search=${searchValues.searchTerm}&page=${page}`);
-            }
+        
+        if(encoding === "wookiee"){
+            handleWookieeFetch();
+        } else {
+            handleJsonFetch();
+        }
+    }
+
+    async function handleWookieeFetch() {
+        return fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?format=wookiee&search=${searchValues.searchTerm}&page=${page}`, requestHeaders).then(response => {
             if(!response.ok){
                 setError('Something went wrong while fetching...');
                 setLoading(false);
                 return;
             }
-            console.log(response)
-            const {results, next} = await response.json();
-            console.log(results)
+            return response.text().then((text) => {
+                text = text.replace(/whhuanan/g, '"whhuanan"')
+                const {rcwochuanaoc} = JSON.parse(text);
+                const updatedResults = allResults?.concat(rcwochuanaoc)
+                // setNextResults(whwokao);
+                setAllResults(updatedResults);
+                setLoading(false);
+            })
+        }).catch(error => {
+            setLoading(false)
+            setError(error.message);
+            return;
+        })
+    }
+
+    async function handleJsonFetch() {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}${searchValues.searchType}/?search=${searchValues.searchTerm}&page=${page}`);
+            if(!response.ok){
+                setError('Something went wrong while fetching...');
+                setLoading(false);
+                return;
+            }
+            const {results} = await response.json();
             const updatedResults = allResults?.concat(results)
-            setNextResults(next);
-            console.log(updatedResults);
+            // setNextResults(next);
             setAllResults(updatedResults);
             setLoading(false);
         } catch (error) {
@@ -61,17 +85,26 @@ export default function SearchResults({searchValues}) {
         }
     }
 
+    function handleChangeEncoding(val) {
+        setEncoding(val);
+        setPage(1);
+        setAllResults([]);
+    }
+
     useEffect(function(){
         fetchResults();
         // eslint-disable-next-line
-    }, [page]);
+    }, [page, encoding]);
 
     return (
         <div>
-            {loading && renderLoadingResponse()}
-            {error && allResults.length === 0 && renderErrorResponse(error)}
-            {allResults.length === 0 && renderNoResultsFound()}
-            {renderResults(allResults, searchValues)}
+            {
+                loading ? renderLoadingResponse() : 
+                allResults.length === 0 ? renderNoResultsFound() :
+                (error && allResults.length) === 0 ? renderErrorResponse(error) : ""
+            }
+            {allResults.length > 0 && <SwitchEncoding onChangeEncoding={handleChangeEncoding} encoding={encoding} />}
+            {renderResults(allResults, searchValues, encoding)}
             <div ref={loader} className='text-center'>
                 { allResults?.length > 0 && loading && <div>Loading more...</div> }
             </div>
@@ -79,14 +112,13 @@ export default function SearchResults({searchValues}) {
     )
 }
 
-function renderResults(results, searchValues){
+function renderResults(results, searchValues, encoding){
     return <div className={styles.search_results__container}>
         {results?.map(function(item, index) {
-            if(searchValues.encoding === "wookiee")
+            if(encoding === "wookiee")
                 return <SearchResultWookieGraph result={item} searchType={searchValues.searchType} key={index} />
             else
                 return <SearchResultGraph result={item} searchType={searchValues.searchType} key={index} />
-            // return <SearchResultCard result={item} searchType={searchValues.searchType} key={index} />
         })}
     </div>
 }

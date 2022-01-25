@@ -3,7 +3,6 @@ import { searchType } from '../../../utils';
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import SearchOptions from './search-options/SearchOptions';
-// import SwitchEncoding from "./switch-encoding/SwitchEncoding";
 
 
 function SearchBox() {
@@ -26,15 +25,10 @@ function SearchBox() {
         else setShowOptions(false)
     }
 
-    // function handleChangeEncoding(val) {
-    //     setValues({...values, encoding: val})
-    // }
-
     function handleSubmit(e){
         e.preventDefault();
 
-        if(values.searchType === ""){
-        // if(values.searchTerm === "" || values.searchType === ""){
+        if(values.searchTerm === "" || values.searchType === ""){
             return;
         }
 
@@ -63,14 +57,10 @@ function SearchBox() {
             <h1 className={styles.search_text}>Find Anything <span className={styles.starwars_text}>StarWars!</span></h1>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div className={styles.searchbox_container}>
-                    {/* <SwitchEncoding onChangeEncoding={handleChangeEncoding} /> */}
-                    {
-                        values.encoding === "" &&
-                        <div className={styles.form_group_search}>
-                            <label>Search Term</label>
-                            <input type="text" onChange={handleChange} name="searchTerm" className={styles.input} value={values.searchTerm} placeholder="search" required={values.encoding === ""} />
-                        </div>
-                    }
+                    <div className={styles.form_group_search}>
+                        <label>Search Term</label>
+                        <input type="text" onChange={handleChange} name="searchTerm" className={styles.input} value={values.searchTerm} placeholder="search" required={values.encoding === ""} />
+                    </div>
                     <SearchOptions
                         showOptions={ showOptions }
                         searchTerm={values.searchTerm}
