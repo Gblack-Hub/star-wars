@@ -9,7 +9,7 @@ export default function SearchResults({searchValues}) {
     const [page, setPage] = useState(1)
     const [allResults, setAllResults] = useState([]);
     // const [nextResults, setNextResults] = useState(true);
-    const [encoding, setEncoding] = useState("wookiee");
+    const [encoding, setEncoding] = useState("");
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const loader = useRef(null);
