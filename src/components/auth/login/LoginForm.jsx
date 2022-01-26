@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, loginSelector } from '../../store/slices/auth/login';
+import { login, loginSelector } from '../../../store/slices/auth/login';
 import styles from "./login-form.module.css";
 
 export default function LoginForm() {
