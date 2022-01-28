@@ -98,24 +98,4 @@ describe("testing select dropdown for search type", () => {
     );
     expect(screen.getByRole("option", { name: "planets" }).selected).toBe(true);
   });
-
-  //   it("should display error message if character name is empty", () => {
-  //     const { nameInputElement, loginButtonElement } = setup();
-  //     fireEvent.change(nameInputElement, { target: { value: "" } });
-  //     fireEvent.click(loginButtonElement);
-  //     const errorElement = screen.getByText(/Enter Character name/i);
-
-  //     expect(errorElement).toBeInTheDocument();
-  //     expect(errorElement).toBeVisible();
-  //   });
-
-  //   it("should display error message if birth year (password) name is empty", () => {
-  //     const { passwordInputElement, loginButtonElement } = setup();
-  //     fireEvent.change(passwordInputElement, { target: { value: "" } });
-  //     fireEvent.click(loginButtonElement);
-  //     const errorElement = screen.getByText(/Enter birth year/i);
-
-  //     expect(errorElement).toBeInTheDocument();
-  //     expect(errorElement).toBeVisible();
-  //   });
 });
