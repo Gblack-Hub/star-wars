@@ -16,7 +16,7 @@ export default function SearchOptions({showOptions, searchTerm, options, onClick
     if(showOptions && newOptions.length < 1) return <div className={styles.options__container}>loading...</div>
     if(showOptions)
     return (
-        <div className={styles.options__container}>
+        <div className={styles.options__container} title="suggestion-dropdown">
             {newOptions?.map((item,index) => (
                 <div key={index} className={styles.options__item} onClick={ () => onClick(item) }>
                     <span className={styles.options__text}>

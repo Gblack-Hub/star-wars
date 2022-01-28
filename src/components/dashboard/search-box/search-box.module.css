@@ -20,7 +20,8 @@
   box-sizing: border-box;
   width: 100%;
 }
-.form_group > label {
+.form_group > label,
+.form_group_search > label {
   padding-bottom: 10px;
   font-weight: bold;
 }
@@ -84,6 +85,14 @@
 .button:focus {
   box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
   outline: none;
+}
+.searchbox_warning {
+  background-color: rgba(250, 234, 7, 0.2);
+  padding: 0.7rem 0.35rem;
+  margin-top: 10px;
+  text-align: center;
+  font-size: small;
+  border-radius: 5px;
 }
 
 @media only screen and (min-width: 576px) {

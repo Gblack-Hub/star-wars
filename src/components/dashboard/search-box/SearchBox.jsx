@@ -9,16 +9,20 @@ function SearchBox() {
     const navigate = useNavigate();
     const [options, setOptions] = useState([]);
     const [showOptions, setShowOptions] = useState(false);
+    const [isValidated, setIsValidated] = useState({
+		status: true,
+		message: "",
+	});
 
     const [values, setValues] = useState({
         searchTerm: "",
-        encoding: "",
         searchType: "people"
     })
 
     function handleChange(event) {
         const {value, name} = event.target;
         setValues({...values, [name]: value});
+        setIsValidated({...isValidated, status: true});
         
         //fetch data only if a search term exists and only when target name is searchTerm, else hide dropdown menu
         if(value.trim() && name === "searchTerm") fetchData(value);
@@ -28,8 +32,11 @@ function SearchBox() {
     function handleSubmit(e){
         e.preventDefault();
 
-        if(values.searchTerm === "" || values.searchType === ""){
-            return;
+        if (!values.searchTerm.trim()) {
+            return setIsValidated({...isValidated, status: false, message: "Enter search term"});
+        }
+        if (!values.searchType.trim()){
+            return setIsValidated({...isValidated, status: false, message: "Select a search type"})
         }
 
         navigate("/search-results", {state: values})
@@ -59,7 +66,7 @@ function SearchBox() {
                 <div className={styles.searchbox_container}>
                     <div className={styles.form_group_search}>
                         <label>Search Term</label>
-                        <input type="text" onChange={handleChange} name="searchTerm" className={styles.input} value={values.searchTerm} placeholder="search" required={values.encoding === ""} />
+                        <input type="text" onChange={handleChange} name="searchTerm" className={styles.input} value={values.searchTerm} placeholder="search" required />
                     </div>
                     <SearchOptions
                         showOptions={ showOptions }
@@ -69,10 +76,11 @@ function SearchBox() {
                     />
                     <div className={styles.form_group}>
                         <label>Where</label>
-                        <select onChange={handleChange} name="searchType" className={styles.select} value={values.searchType} required>
+                        <select onChange={handleChange} name="searchType" role="combobox" className={styles.select} value={values.searchType} required>
                             {renderSearchType()}
                         </select>
                     </div>
+                    {!isValidated.status && <div data-testid="warning div" className={styles.searchbox_warning}>{isValidated.message}</div>}
                     <div className={styles.form_group}>
                         <button type="submit" className={styles.button}>Search</button>
                     </div>

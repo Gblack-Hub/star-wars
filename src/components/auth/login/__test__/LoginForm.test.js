@@ -32,7 +32,7 @@ describe("testing login form", () => {
     render(<MockLoginForm />);
   });
 
-  it("should display error message if character name is empty", () => {
+  it("should display error message if character name is empty after form submission", () => {
     const { nameInputElement, loginButtonElement } = setup();
     fireEvent.change(nameInputElement, { target: { value: "" } });
     fireEvent.click(loginButtonElement);
@@ -42,7 +42,7 @@ describe("testing login form", () => {
     expect(errorElement).toBeVisible();
   });
 
-  it("should display error message if birth year (password) name is empty", () => {
+  it("should display error message if birth year (password) name is empty after form submission", () => {
     const { passwordInputElement, loginButtonElement } = setup();
     fireEvent.change(passwordInputElement, { target: { value: "" } });
     fireEvent.click(loginButtonElement);
@@ -51,13 +51,12 @@ describe("testing login form", () => {
     expect(errorElement).toBeInTheDocument();
     expect(errorElement).toBeVisible();
   });
-});
 
-it("should work based on normal typing behaviour", async () => {
-  const { nameInputElement, passwordInputElement } = setup();
-  fireEvent.change(nameInputElement, { target: { value: "Luke Skywalker" } });
-  expect(nameInputElement.value).toBe("Luke Skywalker");
-  fireEvent.change(passwordInputElement, { target: { value: "19BBY" } });
-  expect(passwordInputElement.value).toBe("19BBY");
-  // fireEvent.click(loginButtonElement);
+  it("should display typed characters in input accordingly", async () => {
+    const { nameInputElement, passwordInputElement } = setup();
+    fireEvent.change(nameInputElement, { target: { value: "Luke Skywalker" } });
+    expect(nameInputElement.value).toBe("Luke Skywalker");
+    fireEvent.change(passwordInputElement, { target: { value: "19BBY" } });
+    expect(passwordInputElement.value).toBe("19BBY");
+  });
 });
