@@ -1,51 +1,42 @@
-// import { render, screen } from "@testing-library/react";
-// import { BrowserRouter as Router } from "react-router-dom";
-// import { Provider } from "react-redux";
-// import { store } from "../../../../../store";
-// import SearchResultGraph from "../SearchResultGraph";
-// import SearchResultWookieGraph from "../SearchResultWookieGraph";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
+import { store } from "../../../../../store";
+import SwitchEncoding from "../SwitchEncoding";
 
-// const MockSearchResultGraph = () => {
-//   return (
-//     <Provider store={store}>
-//       <Router>
-//         <SearchResultGraph />
-//       </Router>
-//     </Provider>
-//   );
-// };
-// const MockSearchResultWookieGraph = () => {
-//   return (
-//     <Provider store={store}>
-//       <Router>
-//         <SearchResultWookieGraph />
-//       </Router>
-//     </Provider>
-//   );
-// };
+const MockSwitchEncoding = () => {
+  return (
+    <Provider store={store}>
+      <Router>
+        <SwitchEncoding />
+      </Router>
+    </Provider>
+  );
+};
 
-// describe("testing search-result-graph component", () => {
-//   it("should render component without errors", () => {
-//     render(<MockSearchResultGraph />);
-//   });
+describe("testing switch-encoding component", () => {
+  it("should render component without errors", () => {
+    render(<MockSwitchEncoding />);
+  });
 
-//   it("should display component to view", () => {
-//     render(<MockSearchResultGraph />);
-//     const componentContainer = screen.getByTitle(/search-result-graph/i);
-//     expect(componentContainer).toBeInTheDocument();
-//     expect(componentContainer).toBeVisible();
-//   });
-// });
+  it("should display component to view", () => {
+    render(<MockSwitchEncoding />);
+    const componentContainer = screen.getByTitle(/switch-encoding/i);
+    expect(componentContainer).toBeInTheDocument();
+    expect(componentContainer).toBeVisible();
+  });
 
-// describe("testing search-result-wookie-graph component", () => {
-//   it("should render component without errors", () => {
-//     render(<MockSearchResultWookieGraph />);
-//   });
+  //   it("should make JSON the default selected option", () => {
+  //     render(<MockSwitchEncoding />);
+  //     const radioElement = screen.getByLabelText(/JSON/i);
+  //   });
 
-//   it("should display component to view", () => {
-//     render(<MockSearchResultWookieGraph />);
-//     const componentContainer = screen.getByTitle(/search-result-wookie-graph/i);
-//     expect(componentContainer).toBeInTheDocument();
-//     expect(componentContainer).toBeVisible();
-//   });
-// });
+  //   it("should change radio options without errors", () => {
+  //     //   const onChangeEncoding = jest.fn();
+  //     render(<MockSwitchEncoding />);
+  //     const radioElement = screen.getByLabelText(/JSON/i);
+  //     console.log(radioElement);
+  //     // fireEvent.click(radioElement);
+  //     //   expect(radioElement).toBeChecked();
+  //   });
+});

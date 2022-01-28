@@ -1,18 +1,28 @@
+import { memo, useState, useEffect } from "react";
 import styles from "./switch-encoding.module.css";
 
-export default function SwitchEncoding({onChangeEncoding, encoding}){
+function SwitchEncoding({onChangeEncoding, encoding}){
+    const [encode, setEncode] = useState("");
 
     function handleChangeEncoding(e) {
         onChangeEncoding(e.target.value);
     }
+    console.log(encoding);
+
+    useEffect(function(){
+            setEncode(encoding);
+    }, [encoding])
+
     return (
-        <div className={styles.encoding}>
+        <div className={styles.encoding} title="switch-encoding">
             <label>
-                <input type="radio" value="" name="encoding" checked={encoding === ""} onChange={handleChangeEncoding} /> JSON
+                <input type="radio" value="" checked={encode === ""} onChange={handleChangeEncoding} /> JSON
             </label>
             <label>
-                <input type="radio" value="wookiee" name="encoding" checked={encoding === "wookiee"} onChange={handleChangeEncoding} /> Wookie
+                <input type="radio" value="wookiee" checked={encoding === "wookiee"} onChange={handleChangeEncoding} /> Wookiee
             </label>
         </div>
     )
 }
+
+export default memo(SwitchEncoding);

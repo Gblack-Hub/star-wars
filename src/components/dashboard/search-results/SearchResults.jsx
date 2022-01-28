@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
-import { SearchResultGraph } from './search-result-graph/SearchResultGraph';
-import { SearchResultWookieGraph } from './search-result-graph/SearchResultWookieGraph';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import SearchResultGraph from './search-result-graph/SearchResultGraph';
+import SearchResultWookieGraph from './search-result-graph/SearchResultWookieGraph';
 import styles from "./search-results.module.css";
 import { requestHeaders } from '../../../utils/index';
 import SwitchEncoding from './switch-encoding/SwitchEncoding';
@@ -85,6 +85,8 @@ export default function SearchResults({searchValues}) {
         }
     }
 
+    const memoizedChangeEncoding = useCallback((val) => handleChangeEncoding(val), [])
+
     function handleChangeEncoding(val) {
         setEncoding(val);
         setPage(1);
@@ -103,7 +105,7 @@ export default function SearchResults({searchValues}) {
                 allResults.length === 0 ? renderNoResultsFound() :
                 (error && allResults.length) === 0 ? renderErrorResponse(error) : ""
             }
-            {allResults.length > 0 && <SwitchEncoding onChangeEncoding={handleChangeEncoding} encoding={encoding} />}
+            {allResults.length > 0 && <SwitchEncoding onChangeEncoding={memoizedChangeEncoding} encoding={encoding} />}
             {renderResults(allResults, searchValues, encoding)}
             <div ref={loader} className='text-center'>
                 { allResults?.length > 0 && loading && <div>Loading more...</div> }
