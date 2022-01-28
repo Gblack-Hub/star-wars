@@ -14,15 +14,26 @@ const MockLoginForm = () => {
   );
 };
 
+const setup = () => {
+  const utils = render(<MockLoginForm />);
+  const nameInputElement = utils.getByPlaceholderText(/character name/i);
+  const passwordInputElement = utils.getByPlaceholderText(/birth year/i);
+  const loginButtonElement = utils.getByRole("button", { type: /Submit/i });
+  return {
+    nameInputElement,
+    passwordInputElement,
+    loginButtonElement,
+    ...utils,
+  };
+};
+
 describe("testing login form", () => {
   it("should render without crashing", () => {
     render(<MockLoginForm />);
   });
 
   it("should display error message if character name is empty", () => {
-    render(<MockLoginForm />);
-    const nameInputElement = screen.getByPlaceholderText(/character name/i);
-    const loginButtonElement = screen.getByRole("button", { type: /Submit/i });
+    const { nameInputElement, loginButtonElement } = setup();
     fireEvent.change(nameInputElement, { target: { value: "" } });
     fireEvent.click(loginButtonElement);
     const errorElement = screen.getByText(/Enter Character name/i);
@@ -32,9 +43,7 @@ describe("testing login form", () => {
   });
 
   it("should display error message if birth year (password) name is empty", () => {
-    render(<MockLoginForm />);
-    const passwordInputElement = screen.getByPlaceholderText(/birth year/i);
-    const loginButtonElement = screen.getByRole("button", { type: /Submit/i });
+    const { passwordInputElement, loginButtonElement } = setup();
     fireEvent.change(passwordInputElement, { target: { value: "" } });
     fireEvent.click(loginButtonElement);
     const errorElement = screen.getByText(/Enter birth year/i);
@@ -42,4 +51,13 @@ describe("testing login form", () => {
     expect(errorElement).toBeInTheDocument();
     expect(errorElement).toBeVisible();
   });
+});
+
+it("should work based on normal typing behaviour", async () => {
+  const { nameInputElement, passwordInputElement } = setup();
+  fireEvent.change(nameInputElement, { target: { value: "Luke Skywalker" } });
+  expect(nameInputElement.value).toBe("Luke Skywalker");
+  fireEvent.change(passwordInputElement, { target: { value: "19BBY" } });
+  expect(passwordInputElement.value).toBe("19BBY");
+  // fireEvent.click(loginButtonElement);
 });

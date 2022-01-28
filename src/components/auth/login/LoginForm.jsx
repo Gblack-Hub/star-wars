@@ -74,7 +74,7 @@ export default function LoginForm() {
                 />
             </div>
             {failure && <div className={styles.login_error}>{error.message ?? "Login error. Please check your internet connection."}</div>}
-            {!isValidated.status && <div className={styles.login_warning}>{isValidated.message}</div>}
+            {!isValidated.status && <div data-testid="warning div" className={styles.login_warning}>{isValidated.message}</div>}
             <div>
                 <button type="submit" className={styles.button}>Submit</button>
             </div>
