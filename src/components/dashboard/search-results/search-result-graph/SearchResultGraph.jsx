@@ -34,22 +34,22 @@ export const options = {
   },
 };
 
-export function SearchResultGraph({result, searchType}) {
+export default function SearchResultGraph({result, searchType}) {
     let labels = searchType === "planets" ? ["Population"] : ['Height', 'Mass'];
     const [data] = useState({
         labels,
         datasets: [
           {
             label: searchType === "planets" ? "Population" : 'Height & Mass',
-            data: searchType === "planets" ? [Number(result.population)] : [Number(result.height), Number(result.mass)],
+            data: searchType === "planets" ? [Number(result?.population)] : [Number(result?.height), Number(result?.mass)],
             color: "#FFFFFF",
             backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(53, 162, 235, 0.5)'],
           }
         ],
     })
     return (
-        <div className={styles.card}>
-            <div className={styles.card_lead_text}>{result.name}</div>
+        <div className={styles.card} title="search-result-graph">
+            <div className={styles.card_lead_text}>{result?.name}</div>
             <Bar options={options} data={data} />
         </div>
     )

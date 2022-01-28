@@ -34,22 +34,22 @@ export const options = {
   },
 };
 
-export function SearchResultWookieGraph({result, searchType}) {
+export default function SearchResultWookieGraph({result, searchType}) {
     let labels = searchType === "planets" ? ["Akooakhuanraaoahoowh"] : ['Acwoahrracao', 'Scracc'];
     const [data] = useState({
         labels,
         datasets: [
           {
             label: searchType === "planets" ? "Akooakhuanraaoahoowh" : 'Acwoahrracao & Scracc',
-            data: searchType === "planets" ? [Number(result.akooakhuanraaoahoowh)] : [Number(result.acwoahrracao), Number(result.scracc)],
+            data: searchType === "planets" ? [Number(result?.akooakhuanraaoahoowh)] : [Number(result?.acwoahrracao), Number(result?.scracc)],
             color: "#FFFFFF",
             backgroundColor: ['rgba(255, 99, 132, 0.5)', 'rgba(53, 162, 235, 0.5)'],
           }
         ],
     })
     return (
-        <div className={styles.card}>
-            <div className={styles.card_lead_text}>{result.whrascwo}</div>
+        <div className={styles.card} title="search-result-wookie-graph">
+            <div className={styles.card_lead_text}>{result?.whrascwo}</div>
             <Bar options={options} data={data} />
         </div>
     )
