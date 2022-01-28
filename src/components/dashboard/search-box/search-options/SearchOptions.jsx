@@ -5,11 +5,12 @@ import styles from './search-options.module.css';
 
 SearchOptions.propTypes = {
     showOptions: PropTypes.bool,
-    option: PropTypes.array,
+    searchTerm: PropTypes.string,
+    options: PropTypes.array,
     onClick: PropTypes.func
 };
 
-export default function SearchOptions({showOptions, searchTerm, options, onClick}) {
+export default function SearchOptions({showOptions, searchTerm, options = [], onClick}) {
     //add the typed search term to the options list
     const newOptions = [{name: searchTerm}, ...options];
 
