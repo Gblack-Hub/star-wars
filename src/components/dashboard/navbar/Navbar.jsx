@@ -10,7 +10,7 @@ export default function Navbar() {
         navigate("/login");
     }
     return (
-        <nav className={styles.navbar}>
+        <nav className={styles.navbar} title="navbar">
             <Link to="/">
                 <span className={styles.navbar__brand}>Home</span>
             </Link>

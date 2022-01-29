@@ -60,7 +60,7 @@ function SearchBox() {
     }
 
     return (
-        <div className={styles.dark_background}>
+        <div className={styles.dark_background} title="search-box">
             <h1 className={styles.search_text}>Find Anything <span className={styles.starwars_text}>StarWars!</span></h1>
             <form onSubmit={handleSubmit} autoComplete="off">
                 <div className={styles.searchbox_container}>
